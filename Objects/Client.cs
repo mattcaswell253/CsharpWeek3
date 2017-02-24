@@ -76,8 +76,8 @@ namespace HairSalon
       {
         int clientId = rdr.GetInt32(0);
         string clientName = rdr.GetString(1);
-        int clientCuisine = rdr.GetInt32(2);
-        Client newClient = new Client(clientName, clientCuisine, clientId);
+        int clientStylist = rdr.GetInt32(2);
+        Client newClient = new Client(clientName, clientStylist, clientId);
         allClients.Add(newClient);
       }
 
@@ -92,6 +92,39 @@ namespace HairSalon
 
       return allClients;
     }
+
+
+    public void Save()
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("INSERT INTO clients ( description, stylist_id) OUTPUT INSERTED.id VALUES ( @ClientName, @ClientStylistId);", conn);
+
+            SqlParameter nameParameter = new SqlParameter();
+            SqlParameter stylistParameter = new SqlParameter();
+            nameParameter.ParameterName = "@ClientName";
+            stylistParameter.ParameterName = "@ClientStylistId";
+            nameParameter.Value = this.GetName();
+            stylistParameter.Value = this.GetStylistId();
+            cmd.Parameters.Add(nameParameter);
+            cmd.Parameters.Add(stylistParameter);
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while(rdr.Read())
+            {
+                this._id = rdr.GetInt32(0);
+            }
+            if (rdr != null)
+            {
+                rdr.Close();
+            }
+            if (conn != null)
+            {
+                conn.Close();
+            }
+        }
+
 
     public static void DeleteAll()
     {
