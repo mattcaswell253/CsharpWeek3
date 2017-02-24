@@ -125,6 +125,78 @@ namespace HairSalon
             }
         }
 
+
+        public string GetStylistName(int id)
+       {
+         SqlConnection conn = DB.Connection();
+         conn.Open();
+
+         SqlCommand cmd = new SqlCommand("SELECT * FROM stylists WHERE id = @StylistId;", conn);
+         SqlParameter stylistIdParameter = new SqlParameter();
+         stylistIdParameter.ParameterName = "@StylistId";
+         stylistIdParameter.Value = id.ToString();
+         cmd.Parameters.Add(stylistIdParameter);
+         SqlDataReader rdr = cmd.ExecuteReader();
+
+         string foundStylistName = null;
+
+         while(rdr.Read())
+         {
+           foundStylistName = rdr.GetString(1);
+         }
+
+
+         if (rdr != null)
+         {
+           rdr.Close();
+         }
+         if (conn != null)
+         {
+           conn.Close();
+         }
+         return foundStylistName;
+       }
+
+       public static List<Client> GetByStylist(int id)
+       {
+
+           List<Client> foundByStylistClient = new List<Client>{};
+           SqlConnection conn = DB.Connection();
+           conn.Open();
+
+           SqlCommand cmd = new SqlCommand("SELECT * FROM clients WHERE id_stylist = @StylistId;", conn);
+
+           SqlParameter stylistParameter = new SqlParameter();
+           stylistParameter.ParameterName = "@StylistId";
+           stylistParameter.Value = id;
+           cmd.Parameters.Add(stylistParameter);
+
+           SqlDataReader rdr = cmd.ExecuteReader();
+
+           while(rdr.Read())
+           {
+               int foundId = rdr.GetInt32(0);
+               string foundName = rdr.GetString(1);
+               int foundStylistId = rdr.GetInt32(2);
+               Client foundClient = new Client(foundName, foundStylistId, foundId);
+               foundByStylistClient.Add(foundClient);
+           }
+
+           if(rdr != null)
+           {
+               rdr.Close();
+           }
+           if(conn != null)
+           {
+               conn.Close();
+           }
+
+           return foundByStylistClient;
+
+       }
+
+
+
         public static Client Find(int id)
       {
           SqlConnection conn = DB.Connection();

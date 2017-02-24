@@ -1,0 +1,20 @@
+
+
+
+<h1>Stylists!</h1>
+
+
+<form action="/stylists" method="post">
+  <label for="stylist">Add New Stylist!!</label>
+  <input id="stylist" type="text" name="stylist">
+
+  <button type="submit" name="button">Add!</button>
+</form>
+<ul>
+  @foreach (var stylist in Model["Stylists"])
+  {
+  <li><a href="/stylists/@stylist.GetId()">@stylist.GetStylist()</a></li>
+  }
+</ul>
+<a href="/">Home</a>
+<a href="/clients">View Clients</a>
