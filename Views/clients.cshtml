@@ -1,0 +1,28 @@
+
+
+
+<h1>Clients!!</h1>
+
+<form action="/clients" method="post">
+  <label for="client">Add New Client!!</label>
+  <input id="client" type="text" name="client">
+  <label for="id_c">Add its Stylist!!</label>
+  <select name="id_c" id="id_c">
+    @foreach (var Stylist in Model["Stylists"])
+    {
+      <option value="@Stylist.GetId()">@Stylist.GetStylist()</option>
+    }
+  </select>
+
+  <button type="submit" name="button">Add!</button>
+</form>
+<ul>
+  @foreach (var client in Model["Clients"])
+  {
+  <li> @client.GetName() -- @client.GetStylistName(@client.GetStylistId())</li>
+  }
+
+</ul>
+
+<a href="/">Home</a>
+<a href="/Stylists">View Stylists</a>

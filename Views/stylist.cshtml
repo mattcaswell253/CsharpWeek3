@@ -1,0 +1,11 @@
+
+
+
+@foreach (var client in Model["Client List"])
+{
+<li>@client.GetName()</li>
+}
+
+<a href="/">Home</a>
+<a href="/clients">View Clients</a>
+<a href="/Stylists">View Stylists</a>

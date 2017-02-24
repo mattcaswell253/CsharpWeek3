@@ -164,7 +164,7 @@ namespace HairSalon
            SqlConnection conn = DB.Connection();
            conn.Open();
 
-           SqlCommand cmd = new SqlCommand("SELECT * FROM clients WHERE id_stylist = @StylistId;", conn);
+           SqlCommand cmd = new SqlCommand("SELECT * FROM clients WHERE stylist_id = @StylistId;", conn);
 
            SqlParameter stylistParameter = new SqlParameter();
            stylistParameter.ParameterName = "@StylistId";
