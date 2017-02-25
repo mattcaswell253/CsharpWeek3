@@ -93,7 +93,6 @@ namespace HairSalon
       return allClients;
     }
 
-
     public void Save()
     {
       SqlConnection conn = DB.Connection();
@@ -232,29 +231,25 @@ namespace HairSalon
     // }
 
 
-    public void Delete()
-    {
-      SqlConnection conn = DB.Connection();
-      conn.Open();
-
-      SqlCommand cmd = new SqlCommand("DELETE FROM clients WHERE id = @ClientId; DELETE FROM tasks WHERE category_id = @CategoryId;", conn);
-
-      SqlParameter categoryIdParameter = new SqlParameter();
-      categoryIdParameter.ParameterName = "@CategoryId";
-      categoryIdParameter.Value = this.GetId();
-
-      cmd.Parameters.Add(categoryIdParameter);
-      cmd.ExecuteNonQuery();
-
-      if (conn != null)
-      {
-        conn.Close();
-      }
-    }
-
-
-
-
+    // public void Delete()
+    // {
+    //   SqlConnection conn = DB.Connection();
+    //   conn.Open();
+    //
+    //   SqlCommand cmd = new SqlCommand("DELETE FROM clients WHERE id = @ClientId; DELETE FROM tasks WHERE category_id = @CategoryId;", conn);
+    //
+    //   SqlParameter categoryIdParameter = new SqlParameter();
+    //   categoryIdParameter.ParameterName = "@CategoryId";
+    //   categoryIdParameter.Value = this.GetId();
+    //
+    //   cmd.Parameters.Add(categoryIdParameter);
+    //   cmd.ExecuteNonQuery();
+    //
+    //   if (conn != null)
+    //   {
+    //     conn.Close();
+    //   }
+    // }
 
 
     public static Client Find(int id)

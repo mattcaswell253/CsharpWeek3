@@ -1,0 +1,11 @@
+body {
+  Color: blue;
+  background-color: #9C1414;
+
+}
+
+.jumbotron {
+  text-align: center;
+  background-color: #A569BD;
+  font-family: 'Ultra', serif
+}

@@ -147,7 +147,6 @@ namespace HairSalon
      return foundStylist;
    }
 
-
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
