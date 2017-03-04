@@ -2,10 +2,24 @@
   Layout="shared/_Layout.cshtml";
 }
 
+<h2>Client List</h2>
+
 
 @foreach (var client in Model["Client List"])
 {
-<li>@client.GetName()</li>
+<li>@client.GetName()
+<form action="/clients/edit/@client.GetId()" method="post">
+<input type="hidden" name="_method" value="PATCH">
+<input type="text" name="client-name" placeholder="Client Name">
+<button type="submit" class="waves-effect waves-light btn" name="button">Update Client</button>
+</form>
+
+
+<form action="/client/delete/@client.GetId()" method="post">
+<input type="hidden" name="_method" value="DELETE">
+<button type="submit" class="waves-effect waves-light btn" name="button">Delete Client</button>
+</form>
+</li>
 }
 
 <a href="/">Home</a>

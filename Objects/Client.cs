@@ -194,62 +194,65 @@ namespace HairSalon
 
     }
 
-    // public void Update(string newName)
-    // {
-    //   SqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //
-    //   SqlCommand cmd = new SqlCommand("UPDATE clients SET description = @NewName OUTPUT INSERTED.name WHERE id = @ClientId;", conn);
-    //
-    //   SqlParameter newNameParameter = new SqlParameter();
-    //   newNameParameter.ParameterName = "@NewName";
-    //   newNameParameter.Value = newName;
-    //   cmd.Parameters.Add(newNameParameter);
-    //
-    //
-    //   SqlParameter categoryIdParameter = new SqlParameter();
-    //   categoryIdParameter.ParameterName = "@ClientId";
-    //   categoryIdParameter.Value = this.GetId();
-    //   cmd.Parameters.Add(categoryIdParameter);
-    //   SqlDataReader rdr = cmd.ExecuteReader();
-    //
-    //   while(rdr.Read())
-    //   {
-    //     this._name = rdr.GetString(0);
-    //   }
-    //
-    //   if (rdr != null)
-    //   {
-    //     rdr.Close();
-    //   }
-    //
-    //   if (conn != null)
-    //   {
-    //     conn.Close();
-    //   }
-    //
-    // }
+    public void Update(string newName)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE clients SET description = @NewName OUTPUT INSERTED.* WHERE id = @ClientId;", conn);
+
+      SqlParameter newNameParameter = new SqlParameter();
+      newNameParameter.ParameterName = "@NewName";
+      newNameParameter.Value = newName;
+      cmd.Parameters.Add(newNameParameter);
+
+      // cmd.Paramaters.Add(new SqlParameter("@NewName", newName));
 
 
-    // public void Delete()
-    // {
-    //   SqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //
-    //   SqlCommand cmd = new SqlCommand("DELETE FROM clients WHERE id = @ClientId; DELETE FROM tasks WHERE category_id = @CategoryId;", conn);
-    //
-    //   SqlParameter categoryIdParameter = new SqlParameter();
-    //   categoryIdParameter.ParameterName = "@CategoryId";
-    //   categoryIdParameter.Value = this.GetId();
-    //
-    //   cmd.Parameters.Add(categoryIdParameter);
-    //   cmd.ExecuteNonQuery();
-    //
-    //   if (conn != null)
-    //   {
-    //     conn.Close();
-    //   }
-    // }
+      SqlParameter categoryIdParameter = new SqlParameter();
+      categoryIdParameter.ParameterName = "@ClientId";
+      categoryIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(categoryIdParameter);
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this._name = rdr.GetString(0);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+
+    }
+
+
+    public void Delete()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM clients WHERE id = @ClientId;", conn);
+
+      SqlParameter categoryIdParameter = new SqlParameter();
+      categoryIdParameter.ParameterName = "@CategoryId";
+      categoryIdParameter.Value = this.GetId();
+
+      cmd.Parameters.Add(categoryIdParameter);
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
 
 
     public static Client Find(int id)

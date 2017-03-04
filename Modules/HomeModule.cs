@@ -30,9 +30,9 @@ namespace HairSalon
 
       Get["/stylists/{id}"]= parameters =>
       {
-        Stylist newStylist = Stylist.Find(parameters.id);
         Dictionary<string, object> model = ModelMaker();
-        model.Add("Stylist Object", newStylist);
+        Stylist newStylist = Stylist.Find(parameters.id);
+        model.Add("stylist", newStylist);
         model.Add("Client List", Client.GetByStylist(newStylist.GetId()));
         return View ["stylist.cshtml", model];
       };
@@ -40,6 +40,20 @@ namespace HairSalon
       Get["/clients"] = _ =>
       {
         return View ["clients.cshtml", ModelMaker()];
+      };
+
+      Patch["/clients/edit/{id}"] = parameters => {
+        Client SelectedClient = Client.Find(parameters.id);
+        SelectedClient.Update(Request.Form["client-name"]);
+        return View["success.cshtml", ModelMaker()];
+      };
+
+      Delete["/clients/delete/{id}"] = parameters => {
+        Dictionary<string, object> model = new Dictionary<string, object>();
+          Client SelectedClient = Client.Find(parameters.id);
+          SelectedClient.Delete();
+          model.Add("client", SelectedClient);
+          return View["success.cshtml", model];
       };
 
       Post["/clients"] = _ =>
