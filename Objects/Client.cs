@@ -199,7 +199,7 @@ namespace HairSalon
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("UPDATE clients SET description = @NewName OUTPUT INSERTED.* WHERE id = @ClientId;", conn);
+      SqlCommand cmd = new SqlCommand("UPDATE clients SET description = @NewName OUTPUT INSERTED.description WHERE id = @ClientId;", conn);
 
       SqlParameter newNameParameter = new SqlParameter();
       newNameParameter.ParameterName = "@NewName";
@@ -242,7 +242,7 @@ namespace HairSalon
       SqlCommand cmd = new SqlCommand("DELETE FROM clients WHERE id = @ClientId;", conn);
 
       SqlParameter categoryIdParameter = new SqlParameter();
-      categoryIdParameter.ParameterName = "@CategoryId";
+      categoryIdParameter.ParameterName = "@ClientId";
       categoryIdParameter.Value = this.GetId();
 
       cmd.Parameters.Add(categoryIdParameter);
